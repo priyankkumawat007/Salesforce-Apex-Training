@@ -16,14 +16,19 @@ Released Log : V1
 public class ClassForUnionIntersecDiffAndSort {
     public void AssignmentForPracticeMap() {
         Map<String, List<String>> mapToStoreDepartmentAndListOfEmployees = new Map<String, List<String>>();
-        mapToStoreDepartmentAndListOfEmployees.put('Marketing', new List<String>{'MarketingEmployee1', 'MarketingEmployee2', 'MarketingEmployee3', 'MarketingEmployee4'});
-        mapToStoreDepartmentAndListOfEmployees.put('Sales', new List<String>{'SalesEmployee1', 'SalesEmployee2', 'SalesEmployee3', 'SalesEmployee4'});
-        mapToStoreDepartmentAndListOfEmployees.put('Finance', new List<String>{'FinanceEmployee1', 'FinanceEmployee2', 'FinanceEmployee3', 'FinanceEmployee4'});
+        mapToStoreDepartmentAndListOfEmployees.put('Marketing', new List<String>
+        {'MarketingEmployee1', 'MarketingEmployee2', 'MarketingEmployee3', 'MarketingEmployee4'});
+        mapToStoreDepartmentAndListOfEmployees.put('Sales', new List<String>
+        {'SalesEmployee1', 'SalesEmployee2', 'SalesEmployee3', 'SalesEmployee4'});
+        mapToStoreDepartmentAndListOfEmployees.put('Finance', new List<String>
+        {'FinanceEmployee1', 'FinanceEmployee2', 'FinanceEmployee3', 'FinanceEmployee4'});
     }
 
     public void AssignmentForPracticeSet() {
-        Set<String> setForStoringTheNameOfStudentClassA = new Set<String>{'Emma Johnson', 'Liam Carter', 'Sophia Patel', 'Noah Brown', 'Ava Singh'};
-        Set<String> setForStoringTheNameOfStudentClassB = new Set<String>{'Emma Johnson', 'Lucas Anderson', 'Sophia Patel', 'Olivia Taylor', 'Mason Wilson'};
+        Set<String> setForStoringTheNameOfStudentClassA = new Set<String>
+        {'Emma Johnson', 'Liam Carter', 'Sophia Patel', 'Noah Brown', 'Ava Singh'};
+        Set<String> setForStoringTheNameOfStudentClassB = new Set<String>
+        {'Emma Johnson', 'Lucas Anderson', 'Sophia Patel', 'Olivia Taylor', 'Mason Wilson'};
         unionOfClassAClassB(setForStoringTheNameOfStudentClassA, setForStoringTheNameOfStudentClassB);
         intersectionOfClassAClassB(setForStoringTheNameOfStudentClassA, setForStoringTheNameOfStudentClassB);
         diffOfClassAFromClassB(setForStoringTheNameOfStudentClassA, setForStoringTheNameOfStudentClassB);
