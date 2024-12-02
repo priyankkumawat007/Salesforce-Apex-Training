@@ -80,10 +80,8 @@ public with sharing class TrainingSessionDataManager {
 
     /**
         * Performs a bulk insert operation for `Training_Session__c` records.
-        * 
         * This method creates a list of `Training_Session__c` records, inserts them into Salesforce, 
         * and handles both successful and failed insert operations. It logs error messages for any failed records.
-        * 
         * @throws Exception Logs any errors encountered during the DML operation or SaveResult handling.
     */
     public static void DMLBulkOperationInsert(){
@@ -106,7 +104,6 @@ public with sharing class TrainingSessionDataManager {
     
     /**
         * Deletes sessions with names containing "BulkOperation", handles errors.
-        * 
         * @throws Exception Logs any errors encountered during the DML operation or DeleteResult handling.
      */
     public static void DMLBulkOperationDelete(){
