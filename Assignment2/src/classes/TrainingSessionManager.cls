@@ -15,7 +15,9 @@ public with sharing class TrainingSessionManager {
         * @param  noOfSesstion of the training session.
         * @throws Error During Insertion:
     **/
-    public static void createRecordForTrainingSession(String sessionName, Sessions typeOfSession,String dateOfSesstion, String location, Integer noOfSesstion) {
+    public static void createRecordForTrainingSession(String sessionName, Sessions typeOfSession,
+                                                      String dateOfSesstion, String location, Integer noOfSesstion
+                                                      ){
         Date dateInFormat = Date.valueOf(dateOfSesstion);
         List<Training_Session__c> newTrainingSessions = new List<Training_Session__c>();
         Training_Session__c newTraining = new Training_Session__c();
@@ -181,14 +183,10 @@ public with sharing class TrainingSessionManager {
                 List<String> nameOfAttendees = new List<String>();
                 for(Attendee__c iteratorOverEachAttendee : iteratorOverTrainingSessions.Attendees1__r){
                     String nameOfAttendeeString = iteratorOverEachAttendee?.Name;
-                    nameOfAttendees.add(nameOfAttendeeString);
-                    
+                    nameOfAttendees.add(nameOfAttendeeString);   
                 }
                 System.debug(nameOfAttendees);
-            }
-            
-        }
-        
+            }  
+        }  
     }
-    
 }
