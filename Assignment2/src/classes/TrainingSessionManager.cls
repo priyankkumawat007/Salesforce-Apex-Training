@@ -177,7 +177,8 @@ public with sharing class TrainingSessionManager {
          * @param sessionId The session ID.
     */
     public static void fetchTrainingSessionAndRelatedAttendees(Id sessionId) {
-        List<Training_Session__c> trainingSessions = [SELECT Id, Name ,(SELECT Id, Name FROM Attendees1__r) FROM Training_Session__c WHERE Id =: sessionId LIMIT 1];      
+        List<Training_Session__c> trainingSessions = [SELECT Id, Name ,(SELECT Id, Name FROM Attendees1__r) 
+                                                      FROM Training_Session__c WHERE Id =: sessionId LIMIT 1];      
         for(Training_Session__c iteratorOverTrainingSessions : trainingSessions){
             if(iteratorOverTrainingSessions.Attendees1__r != null){
                 List<String> nameOfAttendees = new List<String>();
