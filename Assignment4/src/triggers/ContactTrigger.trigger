@@ -12,7 +12,7 @@ trigger ContactTrigger on Contact (before insert,before update) {
 	if(trigger.isBefore){
         if(trigger.isInsert || trigger.isUpdate){
             try{
-				ClassHelperContactTrigger.checkForEmailDomainNameWhenInsertingAndUpdating(trigger.new);
+                ClassHelperContactTrigger.checkForEmailDomainNameWhenInsertingAndUpdating(trigger.new);
             }catch(Exception ex){
                 System.debug('Unexpected error occur while inserting or updating record' + ex.getMessage());
             }
