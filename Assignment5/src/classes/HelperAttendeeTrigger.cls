@@ -44,7 +44,7 @@ public without sharing class HelperAttendeeTrigger {
             for (Id contactId : mapOfContactIdAndTrainingSessions.keySet()) {
                  Contact con = new Contact(
                  	Id = contactId, Number_of_Sessions__c = (!mapOfContactIdAndTrainingSessions.get(contactId).isEmpty() 
-        			                 ? mapOfContactIdAndTrainingSessions.get(contactId).size() : 0));
+        			                 		 ? mapOfContactIdAndTrainingSessions.get(contactId).size() : 0));
 		 contactsToUpdate.add(con);
             }
             if (!contactsToUpdate.isEmpty()) {
