@@ -20,8 +20,7 @@ public without sharing class HelperAttendeeTrigger {
     *
     * param        :   List<Attendee__c> newListOfAttendee, Map<Id, Attendee__c> mapOfOldAttendies
     **/
-    public static void updateNoOfSessionsOnContact(List<Attendee__c> newListOfAttendee, 
-												   Map<Id, Attendee__c> mapOfOldAttendies) {
+    public static void updateNoOfSessionsOnContact(List<Attendee__c> newListOfAttendee, Map<Id, Attendee__c> mapOfOldAttendies) {
         if( (newListOfAttendee != null && mapOfOldAttendies != null) || (newListOfAttendee != null)){
             Set<Id> setOfIds = new Set<Id>();
             for(Attendee__c att : newListOfAttendee) {
@@ -44,11 +43,9 @@ public without sharing class HelperAttendeeTrigger {
             List<Contact> contactsToUpdate = new List<Contact>();
             for (Id contactId : mapOfContactIdAndTrainingSessions.keySet()) {
                  Contact con = new Contact(
-                 	Id = contactId, 
-    				Number_of_Sessions__c = (
-        				!mapOfContactIdAndTrainingSessions.get(contactId).isEmpty() 
-        				? mapOfContactIdAndTrainingSessions.get(contactId).size() : 0));
-				 contactsToUpdate.add(con);
+                 	Id = contactId, Number_of_Sessions__c = (!mapOfContactIdAndTrainingSessions.get(contactId).isEmpty() 
+        			                 ? mapOfContactIdAndTrainingSessions.get(contactId).size() : 0));
+		 contactsToUpdate.add(con);
             }
             if (!contactsToUpdate.isEmpty()) {
                 update contactsToUpdate;
@@ -73,8 +70,7 @@ public without sharing class HelperAttendeeTrigger {
             if (listOfAttendee.size()==0) {
 				for(Id AttendeeId : mapOfOldAttendies.keySet()){
                     System.debug(AttendeeId);
-                    Contact con = new Contact(Id =mapOfOldAttendies.get(AttendeeId).Contact__c, 
-											  Number_of_Sessions__c = 0.00);
+                    Contact con = new Contact(Id =mapOfOldAttendies.get(AttendeeId).Contact__c, Number_of_Sessions__c = 0.00);
                     System.debug(con);
                     contactsToUpdate.add(con);
                 }
@@ -96,11 +92,8 @@ public without sharing class HelperAttendeeTrigger {
                             }
                         }
                         if (trainingSessions.size() != null) {
-                            Contact con = new Contact(
-                				Id = contactId, 
-    							Number_of_Sessions__c = (
-        							!trainingSessions.isEmpty() 
-        							? trainingSessions.size() : 0));
+                            Contact con = new Contact(Id = contactId, Number_of_Sessions__c = (!trainingSessions.isEmpty() 
+        							                               ? trainingSessions.size() : 0));
                             contactsToUpdate.add(con);
                         }
                     }
