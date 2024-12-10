@@ -8,18 +8,18 @@
 * Revision Logs    :   V_1.0 - Created
 **/
 public without sharing class HelperAttendeeTrigger {
-    /**
-* Method Name  :   updateNoOfSessionsOnContact
-* 
-* Created by   :   Priyank Kumawat
-* 
-* Purpose      :   Updates the 'No. Of Attended Training Session' field on the Contact object
-*                  according to the number of sessions that the contact is enrolled in.
-*
-* return       :   void
-*
-* param        :   List<Attendee__c> newListOfAttendee, Map<Id, Attendee__c> mapOfOldAttendies
-**/
+  /**
+  * Method Name  :   updateNoOfSessionsOnContact
+  * 
+  * Created by   :   Priyank Kumawat
+  * 
+  * Purpose      :   Updates the 'No. Of Attended Training Session' field on the Contact object
+  *                  according to the number of sessions that the contact is enrolled in.
+  *
+  * return       :   void
+  *
+  * param        :   List<Attendee__c> newListOfAttendee, Map<Id, Attendee__c> mapOfOldAttendies
+  **/
     public static void updateNoOfSessionsOnContact(List<Attendee__c> newListOfAttendee, Map<Id, Attendee__c> mapOfOldAttendies) {
         Set<Id> contactIds = new Set<Id>();
         for (Attendee__c att : newListOfAttendee != null ? newListOfAttendee : mapOfOldAttendies.values()) {
