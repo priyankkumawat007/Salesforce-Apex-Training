@@ -8,7 +8,6 @@
 * Revision Logs    :   V_1.0 - Created
 **/
 public without sharing class AttendeeTriggerHelper extends TriggerHandler{
-
     public override void afterInsert(){
         updateNoOfSessionsOnContact((List<Attendee__c>)Trigger.new, (Map <Id, Attendee__c>)Trigger.oldMap);
     }
