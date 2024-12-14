@@ -118,7 +118,8 @@ public class ContactTriggerHelperTest {
         try {
             update con;
         } catch (DmlException e) {
-            System.assert(e.getMessage().contains('Email not mentioned,please enter email with Correct domian name'), 'Expected email null error during update');
+            System.assert(e.getMessage().contains('Email not mentioned,please enter email with Correct domian name'), 
+						  'Expected email null error during update');
         }
         Test.stopTest();
     }
