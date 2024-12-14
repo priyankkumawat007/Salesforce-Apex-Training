@@ -31,10 +31,10 @@ public class  ContactTriggerHelper extends TriggerHandler{
 		    Set<Id> setOfContactId = new Set<Id>();
             for(Contact con : newListOfContacts){
                 if(mapOfOldContacts != null){
-					if(con.Email == null){
-                    return;
+			if(con.Email == null){
+                    		return;
                 	}
-				}
+		}
                 if(con.AccountId != null)
                     setOfContactId.add(con.AccountId);
             }
@@ -50,7 +50,7 @@ public class  ContactTriggerHelper extends TriggerHandler{
                         if(mapOfEachAccount.get(con.AccountId).Domain_Name__c == null){
                             con.addError('Domain Name not mentioned in Account');
                         }
-					}
+		    }
                     if(mapOfEachAccount.get(con.AccountId).Domain_Name__c != EmailDomain){
                     		con.addError('Domain Name Wrong');
                     }
