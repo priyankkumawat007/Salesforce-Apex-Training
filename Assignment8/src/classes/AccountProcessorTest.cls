@@ -14,15 +14,15 @@ public without sharing class AccountProcessorTest {
     * 
     * Created by   :   Priyank Kumawat
     * 
-    * Purpose      :   Method to create sample data for testing
+    * Purpose      :   Method to create sample data for testing.
     * 
     * return       :   @void
     * 
     * param        :   null
     **/
 	@TestSetup
-	static void createTestData() {
-		Account acc1 = new Account(Name = 'Test Account1', Domain_Name__c = 'example.com', Phone_Number__c = '8005883998');
+	static void createTestData(){
+	Account acc1 = new Account(Name = 'Test Account1', Domain_Name__c = 'example.com', Phone_Number__c = '8005883998');
         Account acc2 = new Account(Name = 'Test Account2', Domain_Name__c = 'example.com', Phone_Number__c = '8005883990');
         insert new List<Account>{acc1, acc2};
             
@@ -31,21 +31,21 @@ public without sharing class AccountProcessorTest {
         Contact con3 = new Contact(FirstName = 'Bat', LastName = 'Man', Email = 'bat.man@example.com', AccountId = acc2.Id);
         insert new List<Contact>{con1, con2, con3};
     }
-	/** 
+    /** 
     * Method Name  :   testNumberOfRelatedContact
     * 
     * Created by   :   Priyank Kumawat
     * 
-    * Purpose      :   Method to test count of related contact to the specific account is correct or not
+    * Purpose      :   Method to test count of related contact to the specific account is correct or not.
     * 
     * return       :   @void
     * 
     * param        :   null
     **/
     @isTest
-    private static void testNumberOfRelatedContact() {
+    private static void testNumberOfRelatedContact(){
         List<Contact> listOfAccount = [SELECT Id, AccountId, LastName FROM Contact WHERE LastName = 'Kumawat']; 
-		List<Id> accountsToPass = new List<Id>(); 
+	List<Id> accountsToPass = new List<Id>(); 
         accountsToPass.add(listOfAccount[0].AccountId); 
         
         Test.startTest(); 
