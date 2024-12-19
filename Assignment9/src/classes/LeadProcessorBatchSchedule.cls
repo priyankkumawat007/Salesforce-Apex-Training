@@ -8,7 +8,7 @@
  * Rivision Logs    :   V_1.0 - Created
 **/
 global class LeadProcessorBatchSchedule implements Schedulable {
-	/** 
+    /** 
     * Method Name  :   execute
     * 
     * Created by   :   Priyank Kumawat
@@ -19,8 +19,8 @@ global class LeadProcessorBatchSchedule implements Schedulable {
     * 
     * param        :   SchedulableContext SC
     **/
-    global void execute(SchedulableContext SC) {
+    global void execute(SchedulableContext SC){
         LeadProcessorBatch leadprocessor = new LeadProcessorBatch();
-		Id BatchId = Database.executeBatch(leadprocessor,10);
+	Id BatchId = Database.executeBatch(leadprocessor,10);
     }
 }

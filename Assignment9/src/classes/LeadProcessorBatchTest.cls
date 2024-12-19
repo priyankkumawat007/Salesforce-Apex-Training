@@ -9,7 +9,7 @@
 **/
 @isTest
 public class LeadProcessorBatchTest {
-	/** 
+    /** 
     * Method Name  :   setup
     * 
     * Created by   :   Priyank Kumawat
@@ -20,15 +20,15 @@ public class LeadProcessorBatchTest {
     * 
     * param        :   null
     **/
-	@testSetup
+    @testSetup
     static void setup(){
         List<Lead> leads = new List<Lead>();
         for(Integer i=0;i<200;i++){
             leads.add(new Lead(LastName='lead '+i, Company='example'));
         }
-		insert leads;
+	insert leads;
     }
-	/** 
+    /** 
     * Method Name  :   testLeads
     * 
     * Created by   :   Priyank Kumawat
@@ -39,17 +39,17 @@ public class LeadProcessorBatchTest {
     * 
     * param        :   null
     **/
-	@isTest 
+    @isTest 
     public static void testLeads(){
-		Test.startTest();
+	Test.startTest();
         LeadProcessorBatch leadProcessors = new LeadProcessorBatch();
-		Id BatchId = Database.executeBatch(leadProcessors);
-		Test.stopTest();
+	Id BatchId = Database.executeBatch(leadProcessors);
+	Test.stopTest();
 
-		List<Lead> leads = new List<Lead>();
-		leads = [SELECT Id, leadSource FROM Lead];
+	List<Lead> leads = new List<Lead>();
+	leads = [SELECT Id, leadSource FROM Lead];
 
-		Assert.areEqual('Dreamforce', leads[0].leadSource);
-		Assert.areEqual(200, [SELECT count() FROM Lead]);
+	Assert.areEqual('Dreamforce', leads[0].leadSource);
+	Assert.areEqual(200, [SELECT count() FROM Lead]);
     }
 }

@@ -8,8 +8,8 @@
  * Rivision Logs    :   V_1.0 - Created
 **/
 public class LeadProcessorBatch Implements Database.Batchable<sObject>, Database.Stateful {
-	public Integer count = 0;
-	/**
+    public Integer count = 0;
+    /**
     * Method Name  :   start
     * 
     * Created by   :   Priyank Kumawat
@@ -35,15 +35,15 @@ public class LeadProcessorBatch Implements Database.Batchable<sObject>, Database
     * param        :   Database.BatchableContext bc, List<Lead> listOfLeads
     **/
     public void execute(Database.batchableContext bc, List<Lead> listOfLeads){
-		List<Lead> listToUpdateLead = new List<Lead>();
+	List<Lead> listToUpdateLead = new List<Lead>();
         for(Lead leads : listOfLeads){
             leads.leadSource  = 'Dreamforce'; 
-			listToUpdateLead.add(leads);
-			count++;
+ 	    listToUpdateLead.add(leads);
+	    count++;
         }
-		update listToUpdateLead;
+	update listToUpdateLead;
     }
-	/**
+    /**
     * Method Name  :   finish
     * 
     * Created by   :   Priyank Kumawat
@@ -56,9 +56,9 @@ public class LeadProcessorBatch Implements Database.Batchable<sObject>, Database
     **/
     public void finish(Database.BatchableContext bc){
         System.debug('Count Value' + count);
-		AsyncApexJob job = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email
-                 			FROM AsyncApexJob
-            				WHERE Id = :bc.getJobId()];
+	AsyncApexJob job = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email
+                 	    FROM AsyncApexJob
+            		    WHERE Id = :bc.getJobId()];
         System.debug('AsyncApexJob  '+ job);
     }
 }
