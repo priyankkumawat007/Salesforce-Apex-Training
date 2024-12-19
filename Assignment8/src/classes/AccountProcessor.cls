@@ -7,8 +7,8 @@
  * 
  * Rivision Logs    :   V_1.0 - Created
 **/
-public without sharing class AccountProcessor {
-	/**
+public without sharing class AccountProcessor{
+    /**
     * Method Name  :   countContacts
     * 
     * Created by   :   Priyank Kumawat
@@ -20,7 +20,7 @@ public without sharing class AccountProcessor {
     * param        :   List<Id> accountIds
     **/
     @future
-    public static void countContacts(List<Id> accountIds) {
+    public static void countContacts(List<Id> accountIds){
         List<Contact> contacts = [Select Id, Name, AccountId from Contact Where AccountId IN :accountIds];
         map<Id, List<Contact>> mapOfAccountIdAndContact = new map<Id, List<Contact>>();
         for(Contact con : contacts){
@@ -45,5 +45,5 @@ public without sharing class AccountProcessor {
                 System.debug(e.getMessage());
             } 
         }
-	}
+    }
 }
