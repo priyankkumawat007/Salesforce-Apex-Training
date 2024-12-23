@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Number_of_Sessions__c</fullName>
+        <description>Number of training sessions attendee is enrolled .</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Display number of training sessions attendee is enrolled.</inlineHelpText>
+        <label>Number of Sessions</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+</CustomObject>
