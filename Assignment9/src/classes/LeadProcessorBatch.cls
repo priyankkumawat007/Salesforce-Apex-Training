@@ -20,7 +20,7 @@ public class LeadProcessorBatch Implements Database.Batchable<sObject>, Database
     *
     * param        :   Database.BatchableContext bc
     **/
-    public Database.queryLocator start (Database.batchableContext bc){
+    public Database.queryLocator start(Database.batchableContext bc){
         return Database.getQueryLocator('SELECT Id, Name FROM Lead');
     }
     /**
@@ -55,10 +55,8 @@ public class LeadProcessorBatch Implements Database.Batchable<sObject>, Database
     * param        :   Database.BatchableContext bc
     **/
     public void finish(Database.BatchableContext bc){
-        System.debug('Count Value' + count);
 	AsyncApexJob job = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email
                  	    FROM AsyncApexJob
             		    WHERE Id = :bc.getJobId()];
-        System.debug('AsyncApexJob  '+ job);
     }
 }
