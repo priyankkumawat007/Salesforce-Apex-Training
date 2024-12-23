@@ -21,11 +21,11 @@ public without sharing class AccountProcessor{
     **/
     @future
     public static void countContacts(List<Id> accountIds){
-        List<Contact> contacts = [Select Id, Name, AccountId from Contact Where AccountId IN :accountIds];
-        map<Id, List<Contact>> mapOfAccountIdAndContact = new map<Id, List<Contact>>();
+        List<Contact> contacts = [Select Id, Name, AccountId FROM Contact WHERE AccountId IN :accountIds];
+        Map<Id, List<Contact>> mapOfAccountIdAndContact = new Map<Id, List<Contact>>();
         for(Contact con : contacts){
-            if(!mapOfAccountIdAndContact.ContainsKey(con.AccountId)){
-                mapOfAccountIdAndContact.put(con.AccountId,new List<Contact>());
+            if(!mapOfAccountIdAndContact.containsKey(con.AccountId)){
+                mapOfAccountIdAndContact.put(con.AccountId, new List<Contact>());
             }
             mapOfAccountIdAndContact.get(con.AccountId).add(con);	
         }
