@@ -39,8 +39,8 @@ public class  ContactTriggerHelper extends TriggerHandler{
             }
         }
 		Map<Id, Account> mapOfEachAccount = new Map<Id, Account>([SELECT Id, Name, Domain_Name__c 
-                                                                    FROM Account 
-                                                                    WHERE Id IN : setOfContactId]);
+																FROM Account 
+																WHERE Id IN : setOfContactId]);
         for(Contact con : newListOfContacts){
 			String EmailDomain = ' ';
             if(!String.isBlank(con.Email)){

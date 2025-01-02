@@ -68,11 +68,11 @@ public class ContactTriggerHelperTest {
         Account acc = createTestAccount('example.com');
         Contact con = new Contact(FirstName = 'Priyank', LastName = 'Kumawat', Email = 'priyank.kumawat@wrongexample.com', AccountId = acc.Id);
         Test.startTest();
-        try {
-            insert con;
-        } catch (DmlException e) {
-            System.assert(e.getMessage().contains('Enter Correct Email'), 'Expected domain name error');
-        }
+			try {
+				insert con;
+			} catch (DmlException e) {
+				System.assert(e.getMessage().contains('Enter Correct Email'), 'Expected domain name error');
+			}
         Test.stopTest();
     }
     /** 
@@ -94,11 +94,11 @@ public class ContactTriggerHelperTest {
         insert con;
         con.Email = 'priyank.kumawat@example.com';
         Test.startTest();
-        try {
-            update con;
-        } catch (DmlException e) {
-            System.assert(e.getMessage().contains('Domain Name Wrong'), 'Expected domain name error during update');
-        }
+			try {
+				update con;
+			} catch (DmlException e) {
+				System.assert(e.getMessage().contains('Domain Name Wrong'), 'Expected domain name error during update');
+			}
         Test.stopTest();
     }
      /** 
@@ -119,11 +119,11 @@ public class ContactTriggerHelperTest {
         insert con;
         con.Email = null;
         Test.startTest();
-        try {
-            update con;
-        } catch (DmlException e) {
-            System.assert(e.getMessage().contains('Email not mentioned,please enter email with Correct domian name'), 'Expected email null error during update');
-        }
+			try {
+				update con;
+			} catch (DmlException e) {
+				System.assert(e.getMessage().contains('Email not mentioned,please enter email with Correct domian name'), 'Expected email null error during update');
+			}
         Test.stopTest();
     }
     /** 
