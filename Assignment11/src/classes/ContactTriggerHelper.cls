@@ -30,27 +30,27 @@ public class  ContactTriggerHelper extends TriggerHandler{
     * param        :   List<Contact> newContacts
     **/
     public static void checkForEmailDomainNameWhenInsertingAndUpdating(List<Contact> newListOfContacts, Map<Id, Contact> mapOfOldContacts){
-		Set<Id> setOfContactId = new Set<Id>();
-		for(Contact con : newListOfContacts){
+	Set<Id> setOfContactId = new Set<Id>();
+	for(Contact con : newListOfContacts){
             if(con.AccountId != null && con.Email != null){
                 if(mapOfOldContacts == null || (mapOfOldContacts != null && mapOfOldContacts.get(con.Id).Email != con.Email)){
                     setOfContactId.add(con.AccountId);
                 }
             }
         }
-		Map<Id, Account> mapOfEachAccount = new Map<Id, Account>([SELECT Id, Name, Domain_Name__c 
-																FROM Account 
-																WHERE Id IN : setOfContactId]);
+	Map<Id, Account> mapOfEachAccount = new Map<Id, Account>([SELECT Id, Name, Domain_Name__c 
+								     FROM Account 
+								     WHERE Id IN : setOfContactId]);
         for(Contact con : newListOfContacts){
-			String EmailDomain = ' ';
-            if(!String.isBlank(con.Email)){
-            	EmailDomain = getEmailDomain(con.Email);
-            }
-            if(mapOfEachAccount.get(con.AccountId) != null && mapOfEachAccount.get(con.AccountId).Domain_Name__c != EmailDomain
-				&& mapOfEachAccount.get(con.AccountId).Domain_Name__c != null){
-                con.addError('Enter Correct Email');
-            }
-        }
+		String EmailDomain = ' ';
+            	if(!String.isBlank(con.Email)){
+            		EmailDomain = getEmailDomain(con.Email);
+            	}
+            	if(mapOfEachAccount.get(con.AccountId) != null && mapOfEachAccount.get(con.AccountId).Domain_Name__c != EmailDomain
+								  && mapOfEachAccount.get(con.AccountId).Domain_Name__c != null){
+                	con.addError('Enter Correct Email');
+            	}
+         }
 		
     }
     /**
@@ -65,14 +65,14 @@ public class  ContactTriggerHelper extends TriggerHandler{
     * param        :   String email
     **/
     public static String getEmailDomain(String email) {
-            String[] emailParts = email.split('@');
-            if (emailParts.size() > 1) {
-                return emailParts[1];
-            }
+        String[] emailParts = email.split('@');
+        if (emailParts.size() > 1) {
+        	return emailParts[1];
+        }
         return null;
     }
     
-	/**
+    /**
     * Method Name  :   validateIdDynamically
     * 
     * Created by   :   Priyank Kumawat
@@ -85,12 +85,12 @@ public class  ContactTriggerHelper extends TriggerHandler{
     * param        :   List<Contact> newListOfContact
     *                  Map<Id, Contact> mapOfContact
     **/
-	public static void validateIdDynamically(List<Contact> newListOfContact, Map<Id,Contact> mapOfContact){
+    public static void validateIdDynamically(List<Contact> newListOfContact, Map<Id,Contact> mapOfContact){
         for(Contact con :newListOfContact){
             if((mapOfContact == null && con.RecordId__c == null)||mapOfContact != null && mapOfContact.get(con.Id).RecordId__c == con.RecordId__c){
-				return;
+		return;
             }else{
-				con.Picklist_Fields__c = '';
+		 con.Picklist_Fields__c = '';
                 map<Id,String> mapAfterCheck = checkValidId(con.RecordId__c);
                 String allPickList = '';
                 if(!mapAfterCheck.isEmpty()){
@@ -99,17 +99,17 @@ public class  ContactTriggerHelper extends TriggerHandler{
                         if(pickListValues.isEmpty()){
                             return;
                         }
-						String textAreaValue = String.join(pickListValues, '\n');
-                		con.Picklist_Fields__c = textAreaValue;
+			  String textAreaValue = String.join(pickListValues, '\n');
+                	  con.Picklist_Fields__c = textAreaValue;
                     }
                 }
                 if(!mapAfterCheck.isEmpty()){
                     con.Object_Name__c = mapAfterCheck.get(con.RecordId__c);
                 }else{
-					con.addError('Id is Not Valid');
+		     con.addError('Id is Not Valid');
                     con.Object_Name__c = '';
                 }
-			}
+	     }
         }  
     }
 	/**
@@ -123,9 +123,9 @@ public class  ContactTriggerHelper extends TriggerHandler{
     *
     * param        :   Id ids
     **/
-	 public static Map<Id, String> checkValidId(Id ids) {
-        Map<Id, String> mapOfValidIds = new Map<Id, String>();
-        try{
+    public static Map<Id, String> checkValidId(Id ids) {
+     	Map<Id, String> mapOfValidIds = new Map<Id, String>();
+       	try{
             Schema.SObjectType sObjectType = ids.getSObjectType();
             if (!CheckRecordExist(sObjectType, ids)) {
                 throw new DmlException('Invalid Id');
@@ -137,7 +137,7 @@ public class  ContactTriggerHelper extends TriggerHandler{
         }
         return mapOfValidIds;
     } 	
-	/**
+    /**
     * Method Name  :   CheckRecordExist
     * 
     * Created by   :   Priyank Kumawat
@@ -150,14 +150,14 @@ public class  ContactTriggerHelper extends TriggerHandler{
     *                  Id SObjectId
     **/
     public static Boolean CheckRecordExist(Schema.SObjectType obj, Id SObjectId){
-		String query = 'SELECT ID FROM '+obj+' WHERE ID =: SObjectId';
-        List<SObject> sobj = Database.query(query);
-        if(!sobj.isEmpty()){
+	String query = 'SELECT ID FROM '+obj+' WHERE ID =: SObjectId';
+       	List<SObject> sobj = Database.query(query);
+       	if(!sobj.isEmpty()){
             return true;
-        } 
+       	} 
         return false;
     }
-	/**
+    /**
     * Method Name  :   fetchThePicklistValues
     * 
     * Created by   :   Priyank Kumawat
@@ -169,9 +169,9 @@ public class  ContactTriggerHelper extends TriggerHandler{
     * param        :   String objectName
     **/
 	public static List<String> fetchThePicklistValues(String objectName){
-        List<String> pickListFieldList = new List<String>();
-		Schema.DescribeSObjectResult objectResult = ((SObject)Type.forName(objectName).newInstance()).getSObjectType().getDescribe();
-        if(objectResult != null){
+       	List<String> pickListFieldList = new List<String>();
+	Schema.DescribeSObjectResult objectResult = ((SObject)Type.forName(objectName).newInstance()).getSObjectType().getDescribe();
+       	if(objectResult != null){
             map<String, Schema.SObjectField> fieldOfObject = objectResult.fields.getMap();
             for(String fieldName : fieldOfObject.keySet()){
                 Schema.DescribeFieldResult fieldDescribe = fieldOfObject.get(fieldName).getDescribe();
@@ -180,6 +180,6 @@ public class  ContactTriggerHelper extends TriggerHandler{
                 }
             }
         }
-		return pickListFieldList;
+	return pickListFieldList;
     }
 }
