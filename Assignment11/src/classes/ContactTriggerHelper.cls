@@ -97,7 +97,9 @@ public class  ContactTriggerHelper extends TriggerHandler{
                     for(String objectName : mapAfterCheck.values()){
                         list<String> pickListValues = fetchThePicklistValues(objectName);
                         if(pickListValues.isEmpty()){
-                            return;
+			      	con.Picklist_Fields__c = 'No PickList Available';
+
+                            	return;
                         }
 			  String textAreaValue = String.join(pickListValues, '\n');
                 	  con.Picklist_Fields__c = textAreaValue;
