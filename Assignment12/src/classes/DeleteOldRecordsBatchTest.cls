@@ -24,9 +24,9 @@ public class DeleteOldRecordsBatchTest {
     @isTest
     static void testDeleteOldRecordsBatch() {
         Test.startTest();
-        String cronExp = '0 0 0 * * ?';
-        scheduleDeleteOldRecordsBatch batchHandler = new scheduleDeleteOldRecordsBatch();
-        System.schedule('Archive jobs', cronExp, batchHandler);
+        	String cronExp = '0 0 0 * * ?';
+        	scheduleDeleteOldRecordsBatch batchHandler = new scheduleDeleteOldRecordsBatch();
+        	System.schedule('Archive jobs', cronExp, batchHandler);
         Test.stopTest(); 
         Assert.areEqual(2,scheduleDeleteOldRecordsBatch.count);
     }   
