@@ -50,7 +50,7 @@ public class ContactTriggerHelperTest {
         Test.stopTest();
         Contact insertedContact = [SELECT Email FROM Contact WHERE Id = :con.Id];
         System.assertEquals('priyank.kumawat@example.com', insertedContact.Email);
-		System.assertEquals('Priyank', con.FirstName);
+	System.assertEquals('Priyank', con.FirstName);
         System.assertEquals('Kumawat', con.LastName);
         System.assertEquals(insertedContact.Id,insertedContact.Id, 'Contact ID should not be null after insertion');
     }
@@ -78,7 +78,7 @@ public class ContactTriggerHelperTest {
                 System.assert(e.getMessage().contains('Enter Correct Email'), 'Error should specify the incorrect domain name');
             }
         Test.stopTest();
-		System.assertEquals('example.com', acc.Domain_Name__c);
+	System.assertEquals('example.com', acc.Domain_Name__c);
     }
     /** 
      * Method Name  :   testBeforeUpdateWithIncorrectEmailDomain
@@ -106,7 +106,7 @@ public class ContactTriggerHelperTest {
                 System.assert(e.getMessage().contains('email'), 'Error should indicate email is missing');
             }
         Test.stopTest();
-		System.assertEquals('example.com', acc.Domain_Name__c);
+	 System.assertEquals('example.com', acc.Domain_Name__c);
         System.assertEquals('Priyank', con.FirstName);
     }
      /** 
@@ -130,7 +130,7 @@ public class ContactTriggerHelperTest {
         	try {
             		update con;
         	} catch (DmlException e) {
-            		System.assert(e.getMessage().contains('Email not mentioned,please enter email with Correct domian name'), 'Expected email null error during update');
+            		System.assert(e.getMessage().contains('Email not mentioned,enter email with Correct domian name'),'Expected email null');
 			System.assertEquals(true, e.getMessage().contains('email'), 'Error should indicate email is missing');	
         	}
         Test.stopTest();
