@@ -43,13 +43,17 @@ public class ContactTriggerHelperTest {
         Contact con = new Contact(FirstName = 'Priyank', LastName = 'Kumawat', Email = 'priyank.kumawat@example.com', AccountId = acc.Id);
         Test.startTest();
         	try {
-            		insert con;
+            	insert con;
         	} catch (DmlException e) {
-            		System.debug(e.getMessage());
+            	System.debug(e.getMessage());
         	}
         Test.stopTest();
         Contact insertedContact = [SELECT Email FROM Contact WHERE Id = :con.Id];
         System.assertEquals('priyank.kumawat@example.com', insertedContact.Email);
+		//additional assert
+		System.assertEquals('Priyank', con.FirstName);
+        System.assertEquals('Kumawat', con.LastName);
+        System.assertEquals(insertedContact.Id,insertedContact.Id, 'Contact ID should not be null after insertion');
     }
     /** 
      * Method Name  :   testBeforeInsertWithIncorrectEmailDomain
@@ -68,12 +72,16 @@ public class ContactTriggerHelperTest {
         Account acc = createTestAccount('example.com');
         Contact con = new Contact(FirstName = 'Priyank', LastName = 'Kumawat', Email = 'priyank.kumawat@wrongexample.com', AccountId = acc.Id);
         Test.startTest();
-		try {
-			insert con;
-		} catch (DmlException e) {
-			System.assert(e.getMessage().contains('Enter Correct Email'), 'Expected domain name error');
-		}
+            try {
+                insert con;
+            } catch (DmlException e) {
+                System.assert(e.getMessage().contains('Enter Correct Email'), 'Expected domain name error');
+                //additional assert
+                System.assert(e.getMessage().contains('Enter Correct Email'), 'Error should specify the incorrect domain name');
+            }
         Test.stopTest();
+		//Additional Assert
+		System.assertEquals('example.com', acc.Domain_Name__c);
     }
     /** 
      * Method Name  :   testBeforeUpdateWithIncorrectEmailDomain
@@ -94,12 +102,17 @@ public class ContactTriggerHelperTest {
         insert con;
         con.Email = 'priyank.kumawat@example.com';
         Test.startTest();
-		try {
-			update con;
-		} catch (DmlException e) {
-			System.assert(e.getMessage().contains('Domain Name Wrong'), 'Expected domain name error during update');
-		}
+            try {
+                update con;
+            } catch (DmlException e) {
+                System.assert(e.getMessage().contains('Domain Name Wrong'), 'Expected domain name error during update');
+                //Additional Assert
+                System.assert(e.getMessage().contains('email'), 'Error should indicate email is missing');
+            }
         Test.stopTest();
+		//Additional Assert
+		System.assertEquals('example.com', acc.Domain_Name__c);
+        System.assertEquals('Priyank', con.FirstName);
     }
      /** 
      * Method Name  :   testBeforeUpdateWithNullEmail
@@ -119,12 +132,18 @@ public class ContactTriggerHelperTest {
         insert con;
         con.Email = null;
         Test.startTest();
-		try {
-			update con;
-		} catch (DmlException e) {
-			System.assert(e.getMessage().contains('Email not mentioned,please enter email with Correct domian name'), 'null');
-		}
+        try {
+            update con;
+        } catch (DmlException e) {
+            System.assert(e.getMessage().contains('Email not mentioned,please enter email with Correct domian name'), 'Expected email null error during update');
+			//Additional Assert
+			System.assertEquals(true, e.getMessage().contains('email'), 'Error should indicate email is missing');
+			
+        }
         Test.stopTest();
+		//Additional Assert
+		System.assertEquals(acc.Name, 'Test Account');
+        System.assertEquals(acc.Phone_Number__c, '8005883998');
     }
     /** 
      * Method Name  :   testBeforeUpdateWithCorrectEmailDomain
@@ -146,13 +165,17 @@ public class ContactTriggerHelperTest {
         con.Email = 'priyank.kumawat@example.com';
         Test.startTest();
        		try {
-            		update con;
+            	update con;
         	} catch(DmlException e) {
-            		System.debug(e.getMessage());
+            	System.debug(e.getMessage());
         	}
         Test.stopTest();
-        Contact updatedContact = [SELECT Email FROM Contact WHERE Id = :con.Id];
+        Contact updatedContact = [SELECT Id, Email, AccountId FROM Contact WHERE Id = :con.Id];
         System.assertEquals('priyank.kumawat@example.com', updatedContact.Email);
+		//Additional assert
+		System.assertEquals(acc.Id, updatedContact.AccountId, 'Account ID should remain unchanged');
+        System.assertEquals('example.com', acc.Domain_Name__c);
+        System.assertEquals('8005883998', acc.Phone_Number__c);
     }
    
     /** 
@@ -167,7 +190,7 @@ public class ContactTriggerHelperTest {
      * 
      * param        :   null
      **/
-    @isTest
+	 @isTest
     public static void testBeforeInsertWithMissingAccountDomain() {
         Account acc = createTestAccount(null);
         Contact con = new Contact(FirstName = 'Priyank', LastName = 'Kumawat', Email = 'priyank.kumawat@example.com', AccountId = acc.Id);
@@ -180,7 +203,7 @@ public class ContactTriggerHelperTest {
             }
         Test.stopTest();
     }
-     /**
+	/**
      * Method Name  :   testValidateIdDynamicallyWithValidId
      * 
      * Created by   :   Priyank Kumawat
@@ -201,16 +224,16 @@ public class ContactTriggerHelperTest {
             LastName = 'Test Contact',
             RecordId__c = testAccount.Id
         );
-	Test.startTest();
+		Test.startTest();
             insert testContact;
             testContact.RecordId__c = testAccount.Id;
             update testContact;
-	Test.stopTest();
-       	Contact updatedContact = [SELECT Picklist_Fields__c, Object_Name__c FROM Contact WHERE Id = :testContact.Id];
-       	System.assertNotEquals('', updatedContact.Picklist_Fields__c, 'Picklist_Fields__c should not be empty');
-       	System.assertEquals('Account', updatedContact.Object_Name__c, 'Object_Name__c should be Account');
+		Test.stopTest();
+        Contact updatedContact = [SELECT Picklist_Fields__c, Object_Name__c FROM Contact WHERE Id = :testContact.Id];
+        System.assertNotEquals('', updatedContact.Picklist_Fields__c, 'Picklist_Fields__c should not be empty');
+        System.assertEquals('Account', updatedContact.Object_Name__c, 'Object_Name__c should be Account');
     }
-     /**
+	 /**
      * Method Name  :   testValidateIdDynamicallyWithInvalidId
      * 
      * Created by   :   Priyank Kumawat
@@ -237,6 +260,8 @@ public class ContactTriggerHelperTest {
                 System.assert(e.getMessage().contains('Id is Not Valid'), 'Exception message should indicate invalid Id');
             }
         Test.stopTest();
+        System.assertEquals('Invalid Contact', invalidContact.LastName);
+        System.assertEquals('003NS00100O4273YAB', invalidContact.RecordId__c);
     }
 	/**
      * Method Name  :   testFetchThePicklistValues
@@ -252,10 +277,10 @@ public class ContactTriggerHelperTest {
      **/
     @isTest
     static void testFetchThePicklistValues(){
-	Test.startTest();
+		Test.startTest();
         	List<String> picklistFields = ContactTriggerHelper.fetchThePicklistValues('Account');
-	Test.stopTest();
-       	System.assert(!picklistFields.isEmpty(), 'Picklist fields should not be empty');
+		Test.stopTest();
+        System.assert(!picklistFields.isEmpty(), 'Picklist fields should not be empty');
     }
 	/**
      * Method Name  :   testCheckValidId
@@ -271,16 +296,16 @@ public class ContactTriggerHelperTest {
      **/
     @isTest
     static void testCheckValidId() {
-       	Account testAccount = new Account(Name = 'Test Account', Phone_Number__c ='6039084423');
-       	insert testAccount;
-	Test.startTest();
+        Account testAccount = new Account(Name = 'Test Account', Phone_Number__c ='6039084423');
+        insert testAccount;
+		Test.startTest();
         	Map<Id, String> validIdMap = ContactTriggerHelper.checkValidId(testAccount.Id);
-	Test.stopTest();
-       	System.assert(!validIdMap.isEmpty(), 'ValidIdMap should not be empty for a valid Id');
-       	System.assertEquals('Account', validIdMap.get(testAccount.Id), 'ValidIdMap should contain "Account" as the object name');
+		Test.stopTest();
+        System.assert(!validIdMap.isEmpty(), 'ValidIdMap should not be empty for a valid Id');
+        System.assertEquals('Account', validIdMap.get(testAccount.Id), 'ValidIdMap should contain "Account" as the object name');
     }
     
-     /**
+	/**
      * Method Name  :   testCheckRecordExist
      * 
      * Created by   :   Priyank Kumawat
@@ -294,17 +319,16 @@ public class ContactTriggerHelperTest {
      **/
     @isTest
     static void testCheckRecordExist() {
-       	Account testAccount = new Account(Name = 'Test Account', Phone_Number__c ='6039084423');
-       	insert testAccount;
-	Test.startTest();
+        Account testAccount = new Account(Name = 'Test Account', Phone_Number__c ='6039084423');
+        insert testAccount;
+		Test.startTest();
         	Boolean recordExists = ContactTriggerHelper.CheckRecordExist(Schema.Account.SObjectType, testAccount.Id);
-	Test.stopTest();
-       	System.assert(recordExists, 'Record should exist for the given Id');
-       	Boolean recordDoesNotExist = ContactTriggerHelper.CheckRecordExist(Schema.Account.SObjectType, '003NS00100O4273YAB');
-       	System.assert(!recordDoesNotExist, 'Record should not exist for an invalid Id');
+		Test.stopTest();
+        System.assert(recordExists, 'Record should exist for the given Id');
+        Boolean recordDoesNotExist = ContactTriggerHelper.CheckRecordExist(Schema.Account.SObjectType, '003NS00100O4273YAB');
+        System.assert(!recordDoesNotExist, 'Record should not exist for an invalid Id');
     }
-
-     /**
+	 /**
      * Method Name  :   testTriggerWithMultipleContacts
      * 
      * Created by   :   Priyank Kumawat
@@ -323,18 +347,18 @@ public class ContactTriggerHelperTest {
         List<Contact> contacts = new List<Contact>{
             new Contact(LastName = 'Contact 1', RecordId__c = testAccount.Id),
             new Contact(LastName = 'Contact 2', RecordId__c = testAccount.Id)
-       	};
-	Test.startTest();
-       		insert contacts;
-        	for (Contact contact : contacts) {
+        };
+		Test.startTest();
+            insert contacts;
+                for (Contact contact : contacts) {
                     contact.RecordId__c = testAccount.Id;
-               }
-            	update contacts;
-	Test.stopTest();
-       	List<Contact> updatedContacts = [SELECT Picklist_Fields__c, Object_Name__c FROM Contact WHERE Id IN :contacts];
-       	for (Contact contact : updatedContacts) {
+                }
+            update contacts;
+		Test.stopTest();
+        List<Contact> updatedContacts = [SELECT Picklist_Fields__c, Object_Name__c FROM Contact WHERE Id IN :contacts];
+        for (Contact contact : updatedContacts) {
             System.assertNotEquals('', contact.Picklist_Fields__c, 'Picklist_Fields__c should not be empty');
             System.assertEquals('Account', contact.Object_Name__c, 'Object_Name__c should be Account');
-       	}
-   }
+        }
+    }
 }
