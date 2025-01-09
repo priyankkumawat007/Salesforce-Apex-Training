@@ -1,0 +1,16 @@
+trigger EventTrigger on Event (after insert, after update, after delete) {
+	 if(Trigger.isAfter){
+        if(Trigger.isUpdate){
+            EventTriggerHelper.countRelatedActivities(trigger.new,trigger.oldMap);
+        }
+		if(Trigger.isInsert){
+            EventTriggerHelper.countRelatedActivities(trigger.new,trigger.oldMap);
+        }
+		if(Trigger.isDelete){
+            EventTriggerHelper.countRelatedActivities(trigger.new,trigger.oldMap);
+        }
+		if(Trigger.isUndelete){
+            EventTriggerHelper.countRelatedActivities(trigger.new,trigger.oldMap);
+        }
+    }
+}

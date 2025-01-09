@@ -1,0 +1,16 @@
+trigger TaskTrigger on Task (after insert, after update, after delete , after undelete) {
+        if(Trigger.isAfter){
+            if(Trigger.isUpdate){
+                TaskTriggerHelper.countRelatedActivities(trigger.new,trigger.oldMap);
+            }
+            if(Trigger.isInsert){
+                TaskTriggerHelper.countRelatedActivities(trigger.new,trigger.oldMap);
+            }
+            if(Trigger.isDelete){
+                TaskTriggerHelper.countRelatedActivities(trigger.new,trigger.oldMap);
+         	}
+			if(Trigger.isUndelete){
+                TaskTriggerHelper.countRelatedActivities(trigger.new,trigger.oldMap);
+         }
+    }
+}
